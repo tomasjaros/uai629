@@ -16,50 +16,50 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-				.antMatchers("/public.html").permitAll()
-				.antMatchers("/admin.html").hasAnyRole("ADMIN")
-				.antMatchers("/user.html").hasAnyRole("USER")
-				.anyRequest().authenticated()
-				.and()
-			.formLogin()
-				.loginPage("/login.html").permitAll()
-				.loginProcessingUrl("/login")
-				.and()
-			.csrf().disable()
-			.logout().logoutUrl("/logout").logoutSuccessUrl("/login.html").and()
-			.httpBasic();
-	}
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.withUser("admin").password("veslo").roles("ADMIN", "USER").and()
-			.withUser("pepa").password("padlo").roles("USER").and()
-			.and()
-			.authenticationProvider(authenticationProvider());
-	}
-	
-	
-	private AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(new DummyUserService());
-		
-//		authProvider.setPasswordEncoder(new Md5PasswordEncoder());
-//		ReflectionSaltSource saltSource = new ReflectionSaltSource();
-//		saltSource.setUserPropertyToUse("username");
-//		authProvider.setSaltSource(saltSource);
-		
-		return authProvider;
-	}
-	
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-	
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/public.html").permitAll()
+                .antMatchers("/admin.html").hasAnyRole("ADMIN")
+                .antMatchers("/user.html").hasAnyRole("USER")
+                .anyRequest().authenticated()
+                .and()
+            .formLogin()
+                .loginPage("/login.html").permitAll()
+                .loginProcessingUrl("/login")
+                .and()
+            .csrf().disable()
+            .logout().logoutUrl("/logout").logoutSuccessUrl("/login.html").and()
+            .httpBasic();
+    }
+    
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+            .withUser("admin").password("veslo").roles("ADMIN", "USER").and()
+            .withUser("pepa").password("padlo").roles("USER").and()
+            .and()
+            .authenticationProvider(authenticationProvider());
+    }
+    
+    
+    private AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(new DummyUserService());
+        
+//        authProvider.setPasswordEncoder(new Md5PasswordEncoder());
+//        ReflectionSaltSource saltSource = new ReflectionSaltSource();
+//        saltSource.setUserPropertyToUse("username");
+//        authProvider.setSaltSource(saltSource);
+        
+        return authProvider;
+    }
+    
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+    
 }

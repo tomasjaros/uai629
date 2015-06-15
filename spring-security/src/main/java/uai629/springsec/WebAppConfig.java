@@ -11,9 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan("uai629.springsec")
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
-	@Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
-		registry.jsp("/WEB-INF/jsp/", ".jsp");
-	}
-	
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.jsp("/WEB-INF/jsp/", ".jsp");
+    }
+    
 }
